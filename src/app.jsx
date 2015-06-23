@@ -2,8 +2,8 @@ var React = require("react");
 
 var App = React.createClass({
     render(){
-        return <h1>Hello worldiworld</h1>;
+        return <h1>Hello world of doom!</h1>;
     }
-})
+});
 
 React.render(<App/>, document.getElementById('example'));
