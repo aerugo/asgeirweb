@@ -1,72 +1,5 @@
 var React = require("react");
 
-var sections = [
-    {
-        name: "About",
-        items: [
-            {name: "Hey", key: "Hey", selected: true},
-            {name: "No", key: "No", selected: false},
-            {name: "Way", key: "Way", selected: false}
-        ]
-    },{
-        name: "People",
-        items: [
-            {name: "Bragi Skúlason", key: "Cakewalk", selected: false},
-            {name: "George", key: "George", selected: false},
-            {name: "Adam", key: "Adam", selected: false}
-        ]
-    },{
-        name: "Projects",
-        items: [
-            {name: "Pirate raid", key: "Pirate raid", selected: false},
-            {name: "Goosehunt", key: "Goosehunt", selected: false}
-        ]
-    }
-];
-
-
-// App
-
-var App = React.createClass({
-    render(){
-        return (
-            <div></div>
-        )
-    }
-});
-
-
-// Top panel
-
-var TopPanel = React.createClass({
-    render(){
-        return (
-            <div>
-                <h1>Ásgeir R. Helgason Research</h1>
-            </div>
-        );
-    }
-});
-
-React.render(<TopPanel/>, document.getElementById('title'));
-
-// Main panel
-
-var MainPanel = React.createClass({
-    render(){
-        var content;
-        switch(this.props.route){
-            case "Hey": content = "Hey"; break;
-            case "No":  content = "No"; break;
-            case "Way": content = "Way"; break;
-            default:    content = "Home";
-        }
-        return <div>{content}</div>
-    }
-});
-
-// Sidebar menu
-
 var Section = React.createClass({
     handleClick: function(){
         this.setState({
@@ -81,6 +14,7 @@ var Section = React.createClass({
         }
     },
     render: function() {
+        console.log("Active item: " + this.props.activeItem);
         return (
             <div className={this.state.class}>
                 <div className="sectionhead" onClick={this.handleClick}>{this.props.section.name}</div>
@@ -112,6 +46,7 @@ var SectionItem = React.createClass({
     },
     render: function() {
         var className = this.props.active ? "sectionitem active" : "sectionitem";
+        console.log(this.props.item.name + ": active=" + this.props.active + " class=" + className);
         return (
             <div className={className} onClick={this.handleClick}>{this.props.item.name}</div>
         );
@@ -130,6 +65,7 @@ var Accordion = React.createClass({
         this.setState({
             activeItem: itemName
         });
+        console.log("Accordion activeItem: " + this.state.activeItem);
     },
 
     render: function() {
@@ -146,10 +82,28 @@ var Accordion = React.createClass({
     }
 });
 
-React.render(
-    <Accordion sections={sections} />, document.getElementById('accordion')
-);
+var sections = [
+    {
+        name: "About",
+        items: [
+            {name: "Hey", key: "Hey", selected: true},
+            {name: "No", key: "No", selected: false},
+            {name: "Way", key: "Way", selected: false}
+        ]
+    },{
+        name: "People",
+        items: [
+            {name: "Cakewalk", key: "Cakewalk", selected: false},
+            {name: "George", key: "George", selected: false},
+            {name: "Adam", key: "Adam", selected: false}
+        ]
+    },{
+        name: "Projects",
+        items: [
+            {name: "Pirate raid", key: "Pirate raid", selected: false},
+            {name: "Goosehunt", key: "Goosehunt", selected: false}
+        ]
+    }
+];
 
-Router.run(routes, Router.HashLocation, (Root) => {
-    React.render(<Root/>, document.body);
-});
+React.render(<Accordion sections={sections} />, document.getElementById('accordion'));

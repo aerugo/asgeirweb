@@ -1,0 +1,78 @@
+.top-banner {
+  background-color: #5698FC;
+  color: #ffffff;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #000000;
+}
+
+.top-banner-languages {
+  padding-top: 40px;
+  font-family: @headerfont;
+  font-weight: 700;
+}
+
+.main-container {
+  padding-top: 50px;
+}
+
+@lightblue: #5698FC;
+@headerfont: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+
+body {
+  background: #ffffff;
+}
+
+.main {
+  position: relative;
+  background: #ffffff;
+  max-width: 10em;
+  min-width: 10em;
+  overflow: hidden;
+  padding-bottom: 2em;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.section.open {
+  .articlewrap {
+    max-height: 200px;
+  }
+}
+
+.articlewrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: all .2s ease-in;
+}
+
+.sectionhead {
+  width: 100%;
+  overflow: hidden;
+  background: white;
+  cursor: pointer;
+  font-family: @headerfont;
+  font-weight: 700;
+  color: #000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.5em 2em 0.5em 0.5em;
+}
+
+.sectionitem {
+  font-family: @headerfont;
+  cursor: pointer;
+  background: white;
+  padding: 0.2em 1em;
+}
+
+.sectionitem.active {
+  background: @lightblue;
+  color: white;
+}
+
+.article {
+}

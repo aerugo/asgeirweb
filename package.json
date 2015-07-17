@@ -1,18 +1,30 @@
 {
   "name": "react_playground",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "6to5ify": "^4.1.1",
     "browserify": "^10.2.4",
     "react": "^0.13.3",
+    "react-native": "^0.5.0",
+    "react-native-accordion": "^0.2.0",
     "watchify": "^3.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react-sidenav": "0.0.14"
+  },
   "scripts": {
-    "watch": "node_modules/.bin/watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v"
+    "watch": "watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aerugo/react_playground.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aerugo/react_playground/issues"
+  },
+  "homepage": "https://github.com/aerugo/react_playground#readme",
+  "description": ""
 }
