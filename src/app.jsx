@@ -95,20 +95,6 @@ var SectionItem = React.createClass({
 });
 
 var Accordion = React.createClass({
-    getInitialState: function() {
-        return {
-            openSection: "About",
-            activeItem: "Hey"
-        };
-    },
-
-    onChildClick: function(itemName) {
-        this.setState({
-            activeItem: itemName
-
-        });
-        console.log(itemName);
-    },
 
     render: function() {
         return (
@@ -116,8 +102,8 @@ var Accordion = React.createClass({
                 {this.props.sections.map(function(section) {
                     return <Section key={section.name}
                                     section={section}
-                                    onChildClick={this.onChildClick}
-                                    activeItem={this.state.activeItem}/>
+                                    onChildClick={this.props.onChildClick}
+                                    activeItem={this.props.activeItem}/>
                 }.bind(this))}
             </div>
         );
@@ -129,11 +115,16 @@ var Accordion = React.createClass({
 
 var MainContainer = React.createClass({
 
+    getInitialState: function() {
+        return {
+            activeItem: "Hey"
+        };
+    },
+
     onChildClick: function(itemName) {
         this.setState({
             activeItem: itemName
         });
-        console.log(itemName);
     },
 
     render(){
@@ -141,8 +132,13 @@ var MainContainer = React.createClass({
             <div>
                 <div className="row main-container">
                     <div className="col-md-1 hidden-sm hidden-xs"></div>
-                    <div className="col-md-2 col-sm-3"> <Accordion sections={sections} /> </div>
-                    <div className="col-md-6">{this.props.content.toString()}</div>
+                    <div className="col-md-2 col-sm-3">
+                        <Accordion
+                            onChildClick={this.onChildClick}
+                            sections={sections}
+                            activeItem={this.state.activeItem}/>
+                    </div>
+                    <div className="col-md-6">{this.state.activeItem}</div>
                     <div className="col-md-3 hidden-sm hidden-xs"></div>
                 </div>
             </div>
@@ -154,17 +150,10 @@ var MainContainer = React.createClass({
 
 var App = React.createClass({
     render(){
-        var Content;
-        switch (this.props.route) {
-            case 'Hey': Content = "Hey"; break;
-            case 'No': Content = "No"; break;
-            case 'Way': Content = "Way"; break;
-            default:      Content = "home";
-        }
         return (
-            <div class="container-fluid">
+            <div className="container-fluid">
                 <div><TopPanel /></div>
-                <div><MainContainer content={Content} /></div>
+                <div><MainContainer/></div>
             </div>
         )
     }
