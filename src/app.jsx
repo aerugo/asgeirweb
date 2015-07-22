@@ -1,4 +1,3 @@
-var React = require("react");
 
 var sections = [
     {
@@ -162,15 +161,3 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
-
-
-function getRoutes() {
-    var route_array = [];
-    for (var i = 0; i < sections.length; i++) {
-        var section = sections[i];
-        var section_name = section.name;
-        for (var j = 0; i < section.length; j++) {
-            route_array.push({section: section_name, item: section[j].name})
-        }
-    }
-}

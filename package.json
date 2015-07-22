@@ -14,7 +14,8 @@
     "react-sidenav": "0.0.14"
   },
   "scripts": {
-    "watch": "watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v"
+    "watch": "watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v",
+    "jsx_script": "jsx --extension jsx src/ dist/"
   },
   "author": "",
   "license": "ISC",
