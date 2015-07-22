@@ -11,7 +11,7 @@ var sections = [
     },{
         name: "People",
         items: [
-            {name: "Bragi Skúlason", key: "Cakewalk", selected: false},
+            {name: "Bragi", key: "Cakewalk", selected: false},
             {name: "George", key: "George", selected: false},
             {name: "Adam", key: "Adam", selected: false}
         ]
@@ -24,44 +24,20 @@ var sections = [
     }
 ];
 
-
-// App
-
-var App = React.createClass({
-    render(){
-        return (
-            <div></div>
-        )
-    }
-});
-
-
 // Top panel
 
 var TopPanel = React.createClass({
     render(){
         return (
             <div>
-                <h1>Ásgeir R. Helgason Research</h1>
+                <div className="row top-banner">
+                    <div className="col-md-1 hidden-sm hidden-xs"></div>
+                    <div className="col-md-8 col-sm-8" id="title"><h1>Ásgeir R. Helgason Research</h1></div>
+                    <div className="col-md-2 col-sm-2 top-banner-languages">En Sv Ís</div>
+                </div>
+                <div className="row"></div>
             </div>
         );
-    }
-});
-
-React.render(<TopPanel/>, document.getElementById('title'));
-
-// Main panel
-
-var MainPanel = React.createClass({
-    render(){
-        var content;
-        switch(this.props.route){
-            case "Hey": content = "Hey"; break;
-            case "No":  content = "No"; break;
-            case "Way": content = "Way"; break;
-            default:    content = "Home";
-        }
-        return <div>{content}</div>
     }
 });
 
@@ -121,7 +97,7 @@ var SectionItem = React.createClass({
 var Accordion = React.createClass({
     getInitialState: function() {
         return {
-            openSection: null,
+            openSection: "About",
             activeItem: "Hey"
         };
     },
@@ -129,7 +105,9 @@ var Accordion = React.createClass({
     onChildClick: function(itemName) {
         this.setState({
             activeItem: itemName
+
         });
+        console.log(itemName);
     },
 
     render: function() {
@@ -146,10 +124,64 @@ var Accordion = React.createClass({
     }
 });
 
-React.render(
-    <Accordion sections={sections} />, document.getElementById('accordion')
-);
 
-Router.run(routes, Router.HashLocation, (Root) => {
-    React.render(<Root/>, document.body);
+// Main panel
+
+var MainContainer = React.createClass({
+
+    onChildClick: function(itemName) {
+        this.setState({
+            activeItem: itemName
+        });
+        console.log(itemName);
+    },
+
+    render(){
+        return (
+            <div>
+                <div className="row main-container">
+                    <div className="col-md-1 hidden-sm hidden-xs"></div>
+                    <div className="col-md-2 col-sm-3"> <Accordion sections={sections} /> </div>
+                    <div className="col-md-6">{this.props.content.toString()}</div>
+                    <div className="col-md-3 hidden-sm hidden-xs"></div>
+                </div>
+            </div>
+        )
+    }
 });
+
+// App
+
+var App = React.createClass({
+    render(){
+        var Content;
+        switch (this.props.route) {
+            case 'Hey': Content = "Hey"; break;
+            case 'No': Content = "No"; break;
+            case 'Way': Content = "Way"; break;
+            default:      Content = "home";
+        }
+        return (
+            <div class="container-fluid">
+                <div><TopPanel /></div>
+                <div><MainContainer content={Content} /></div>
+            </div>
+        )
+    }
+});
+
+
+
+React.render(<App/>, document.getElementById('app-container'));
+
+
+function getRoutes() {
+    var route_array = [];
+    for (var i = 0; i < sections.length; i++) {
+        var section = sections[i];
+        var section_name = section.name;
+        for (var j = 0; i < section.length; j++) {
+            route_array.push({section: section_name, item: section[j].name})
+        }
+    }
+}
