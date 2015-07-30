@@ -4,22 +4,19 @@ var sections = [
     {
         name: "About",
         items: [
-            {name: "Hey", key: "Hey", selected: true},
-            {name: "No", key: "No", selected: false},
-            {name: "Way", key: "Way", selected: false}
+            {name: "Hey", key: "hey", selected: true},
+            {name: "No", key: "no", selected: false},
+            {name: "Way", key: "way", selected: false}
         ]
     },{
         name: "People",
         items: [
-            {name: "Bragi", key: "Cakewalk", selected: false},
-            {name: "George", key: "George", selected: false},
-            {name: "Adam", key: "Adam", selected: false}
+            {name: "Bragi", key: "bragi", selected: false}
         ]
     },{
         name: "Projects",
         items: [
-            {name: "Pirate raid", key: "Pirate raid", selected: false},
-            {name: "Goosehunt", key: "Goosehunt", selected: false}
+            {name: "Goose hunt", key: "goose-hunt", selected: false}
         ]
     }
 ];
@@ -66,7 +63,7 @@ var Section = React.createClass({
                             return <SectionItem key={item.name}
                                                 item={item}
                                                 onChildClick={this.props.onChildClick}
-                                                active={this.props.activeItem===item.name}
+                                                active={this.props.activeItem===item.key}
                                 />
                         }.bind(this))}
                     </div>
@@ -78,7 +75,7 @@ var Section = React.createClass({
 
 var SectionItem = React.createClass({
     handleClick: function(){
-        this.props.onChildClick(this.props.item.name);
+        this.props.onChildClick(this.props.item.key);
     },
     getInitialState: function(){
         return {
@@ -110,6 +107,18 @@ var Accordion = React.createClass({
     }
 });
 
+// Content
+
+var Content = React.createClass({
+    render(){
+        // var content = <div id="htmlcontent"></div>;
+        // $( "#htmlcontent" ).load(this.props.data);
+        // console.log("Content: " + this.props.data);
+        return (
+            <iframe className="content-frame" src={this.props.data}></iframe>
+        );
+    }
+});
 
 // Main panel
 
@@ -117,7 +126,7 @@ var MainContainer = React.createClass({
 
     getInitialState: function() {
         return {
-            activeItem: "Hey"
+            activeItem: "hey"
         };
     },
 
@@ -138,7 +147,9 @@ var MainContainer = React.createClass({
                             sections={sections}
                             activeItem={this.state.activeItem}/>
                     </div>
-                    <div className="col-md-6">{this.state.activeItem}</div>
+                    <div className="col-md-6 col-sm-6" >
+                        <Content data={this.state.activeItem + ".html"} />
+                    </div>
                     <div className="col-md-3 hidden-sm hidden-xs"></div>
                 </div>
             </div>
@@ -153,7 +164,7 @@ var App = React.createClass({
         return (
             <div className="container-fluid">
                 <div><TopPanel /></div>
-                <div><MainContainer/></div>
+                <div><MainContainer /></div>
             </div>
         )
     }
