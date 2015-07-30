@@ -107,19 +107,6 @@ var Accordion = React.createClass({
     }
 });
 
-// Content
-
-var Content = React.createClass({
-    render(){
-        // var content = <div id="htmlcontent"></div>;
-        // $( "#htmlcontent" ).load(this.props.data);
-        // console.log("Content: " + this.props.data);
-        return (
-            <iframe className="content-frame" src={this.props.data}></iframe>
-        );
-    }
-});
-
 // Main panel
 
 var MainContainer = React.createClass({
@@ -134,6 +121,8 @@ var MainContainer = React.createClass({
         this.setState({
             activeItem: itemName
         });
+        $( "#html-content" ).load(itemName + ".html");
+        console.log("Content: " + itemName + ".html");
     },
 
     render(){
@@ -148,7 +137,7 @@ var MainContainer = React.createClass({
                             activeItem={this.state.activeItem}/>
                     </div>
                     <div className="col-md-6 col-sm-6" >
-                        <Content data={this.state.activeItem + ".html"} />
+                        <div id="html-content"></div>
                     </div>
                     <div className="col-md-3 hidden-sm hidden-xs"></div>
                 </div>
@@ -173,3 +162,4 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
+$( "#html-content" ).load("hey.html");
