@@ -1,28 +1,95 @@
 var React = require("react");
 
-var sections = [
+var new_sections = [
     {
-        name: "About", key: "about-section",
-        items: [
-            {name: "Current projects", key: "current"},
-            {name: "About Ásgeir", key: "asgeir"}
+        language: "en", key: "en",
+        sections: [
+            {
+            name: "About", key: "about-section",
+            items: [
+                {name: "Current projects", key: "current"},
+                {name: "About Ásgeir", key: "asgeir"}
+                    ]
+            }, {
+            name: "People", key: "people-section",
+            items: [
+                {name: "Bragi", key: "bragi"},
+                {name: "Alumni", key: "alumni"}
+                ]
+            }, {
+                name: "Research", key: "research-section",
+                items: [
+                    {name: "Cancer", key: "cancer"},
+                    {name: "Tobacco", key: "tobacco"},
+                    {name: "Prevention", key: "prevention"},
+                    {name: "Other research", key: "other"}
+                ]
+            }
         ]
-    },{
-        name: "People", key: "people-section",
-        items: [
-            {name: "Bragi", key: "bragi"},
-            {name: "Alumni", key: "alumni"}
+    },
+    {
+        language: "sv", key: "sv",
+        sections: [
+            {
+                name: "Om oss", key: "about-section",
+                items: [
+                    {name: "Pågående projekt", key: "current"},
+                    {name: "Om Ásgeir", key: "asgeir"}
+                ]
+            }, {
+                name: "Medarbetare", key: "people-section",
+                items: [
+                    {name: "Bragi", key: "bragi"},
+                    {name: "Alumner", key: "alumni"}
+                ]
+            }, {
+                name: "Forskning", key: "research-section",
+                items: [
+                    {name: "Cancer", key: "cancer"},
+                    {name: "Tobak", key: "tobacco"},
+                    {name: "Prevention", key: "prevention"},
+                    {name: "Övrig forskning", key: "other"}
+                ]
+            }
         ]
-    },{
-        name: "Research", key: "research-section",
-        items: [
-            {name: "Cancer", key: "cancer"},
-            {name: "Tobacco", key: "tobacco"},
-            {name: "Prevention", key: "prevention"},
-            {name: "Other research", key: "other"}
-
+    },
+    {
+        language: "is", key: "is",
+        sections: [
+            {
+                name: "Um okkur", key: "about-section",
+                items: [
+                    {name: "Núverande verkefni", key: "current"},
+                    {name: "Um Ásgeir", key: "asgeir"}
+                ]
+            }
         ]
     }
+];
+
+var sections = [
+        {
+            name: "About", key: "about-section",
+            items: [
+                {name: "Current projects", key: "current"},
+                {name: "About Ásgeir", key: "asgeir"}
+            ]
+        },{
+            name: "People", key: "people-section",
+            items: [
+                {name: "Bragi", key: "bragi"},
+                {name: "Alumni", key: "alumni"}
+            ]
+        },{
+            name: "Research", key: "research-section",
+            items: [
+                {name: "Cancer", key: "cancer"},
+                {name: "Tobacco", key: "tobacco"},
+                {name: "Prevention", key: "prevention"},
+                {name: "Other research", key: "other"}
+
+            ]
+        }
 ];
 
 // Top panel
@@ -53,13 +120,11 @@ var Section = React.createClass({
     },
     getInitialState: function(){
         if(this.props.section.key == "about-section"){
-            console.log("Is: " + this.props.section.key);
             return {
                 open: true,
                 class: "section open"
             }
         } else {
-            console.log("Not: " + this.props.section.key);
             return {
                 open: false,
                 class: "section"
@@ -75,6 +140,7 @@ var Section = React.createClass({
                         {this.props.section.items.map(function(item) {
                             return <SectionItem key={item.name}
                                                 item={item}
+                                                type={"section_item"}
                                                 onChildClick={this.props.onChildClick}
                                                 active={this.props.activeItem===item.key}
                                 />
@@ -88,7 +154,7 @@ var Section = React.createClass({
 
 var SectionItem = React.createClass({
     handleClick: function(){
-        this.props.onChildClick(this.props.item.key);
+        this.props.onChildClick(this);
     },
     getInitialState: function(){
         return {
@@ -105,15 +171,58 @@ var SectionItem = React.createClass({
 });
 
 var Accordion = React.createClass({
-
     render: function() {
+
+        var these_sections = null;
+        new_sections.map(function(section) {
+            if(section.language == this.props.language) {
+                these_sections = section
+            }
+        }.bind(this));
+        console.log(these_sections);
+
         return (
             <div className="menu">
-                {this.props.sections.map(function(section) {
+                {these_sections.map(function(section) {
                     return <Section key={section.key}
                                     section={section}
                                     onChildClick={this.props.onChildClick}
                                     activeItem={this.props.activeItem}/>
+                }.bind(this))}
+            </div>
+        );
+    }
+});
+
+var LanguageItem = React.createClass({
+    handleClick: function(){
+        this.props.onChildClick(this);
+    },
+
+    render(){
+        return (
+            <div className="language-item" onClick={this.handleClick}>{this.props.name}</div>
+        );
+    }
+});
+
+var LanguageChooser = React.createClass({
+    render(){
+        var languages = [
+            {name: "English", key: "en"},
+            {name: "Svenska", key: "sv"},
+            {name: "Íslenska", key: "is"}
+        ];
+        return (
+            <div className="language-box">
+                <div>Language</div>
+                {languages.map(function(item) {
+                    return <LanguageItem
+                        key={item.key}
+                        name={item.name}
+                        code={item.key}
+                        onChildClick={this.props.onChildClick}
+                        type="language" />
                 }.bind(this))}
             </div>
         );
@@ -126,15 +235,24 @@ var MainContainer = React.createClass({
 
     getInitialState: function() {
         return {
-            activeItem: "current"
+            activeItem: "current",
+            language: "en"
         };
     },
 
-    onChildClick: function(itemName) {
-        this.setState({
-            activeItem: itemName
-        });
-        $( "#html-content" ).load("pages/" + itemName + ".html");
+    onChildClick: function(object) {
+        if(object.props.type == "section_item") {
+            this.setState({
+                activeItem: object.props.item.key
+            });
+            $( "#html-content" ).load("content/pages/" + this.state.language + "/" + object.props.item.key + ".html");
+        }
+        if(object.props.type == "language") {
+            this.setState({
+                language: object.props.code
+            });
+            $( "#html-content" ).load("content/pages/" + object.props.code + "/" + this.state.activeItem + ".html");
+        }
     },
 
     render(){
@@ -146,7 +264,10 @@ var MainContainer = React.createClass({
                         <Accordion
                             onChildClick={this.onChildClick}
                             sections={sections}
-                            activeItem={this.state.activeItem}/>
+                            activeItem={this.state.activeItem}
+                            language={this.state.language}/>
+                        <LanguageChooser
+                            onChildClick={this.onChildClick}/>
                     </div>
                     <div className="col-md-6 col-sm-6 content" >
                         <div id="html-content"></div>
@@ -174,4 +295,4 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
-$( "#html-content" ).load("pages/current.html");
+$( "#html-content" ).load("content/pages/en/current.html");
