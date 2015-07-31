@@ -2,19 +2,19 @@ var React = require("react");
 
 var sections = [
     {
-        name: "About",
+        name: "About", key: "about-section",
         items: [
-            {name: "About Ásgeir", key: "asgeir"},
-            {name: "Current projects", key: "current"}
+            {name: "Current projects", key: "current"},
+            {name: "About Ásgeir", key: "asgeir"}
         ]
     },{
-        name: "People",
+        name: "People", key: "people-section",
         items: [
             {name: "Bragi", key: "bragi"},
             {name: "Alumni", key: "alumni"}
         ]
     },{
-        name: "Research",
+        name: "Research", key: "research-section",
         items: [
             {name: "Cancer", key: "cancer"},
             {name: "Tobacco", key: "tobacco"},
@@ -52,16 +52,25 @@ var Section = React.createClass({
         });
     },
     getInitialState: function(){
-        return {
-            open: false,
-            class: "section"
+        if(this.props.section.key == "about-section"){
+            console.log("Is: " + this.props.section.key);
+            return {
+                open: true,
+                class: "section open"
+            }
+        } else {
+            console.log("Not: " + this.props.section.key);
+            return {
+                open: false,
+                class: "section"
+            }
         }
     },
     render: function() {
         return (
             <div className={this.state.class}>
-                <div className="sectionhead" onClick={this.handleClick}>{this.props.section.name}</div>
-                <div className="articlewrap">
+                <div className="section-head" onClick={this.handleClick}>{this.props.section.name}</div>
+                <div className="article-wrap">
                     <div className="article">
                         {this.props.section.items.map(function(item) {
                             return <SectionItem key={item.name}
@@ -84,11 +93,11 @@ var SectionItem = React.createClass({
     getInitialState: function(){
         return {
             active: false,
-            class: "sectionitem"
+            class: "section-item"
         }
     },
     render: function() {
-        var className = this.props.active ? "sectionitem active" : "sectionitem";
+        var className = this.props.active ? "section-item active" : "section-item";
         return (
             <div className={className} onClick={this.handleClick}>{this.props.item.name}</div>
         );
@@ -101,7 +110,7 @@ var Accordion = React.createClass({
         return (
             <div className="menu">
                 {this.props.sections.map(function(section) {
-                    return <Section key={section.name}
+                    return <Section key={section.key}
                                     section={section}
                                     onChildClick={this.props.onChildClick}
                                     activeItem={this.props.activeItem}/>
@@ -117,7 +126,7 @@ var MainContainer = React.createClass({
 
     getInitialState: function() {
         return {
-            activeItem: "hey"
+            activeItem: "current"
         };
     },
 
