@@ -174,4 +174,4 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
-$( "#html-content" ).load("pages/asgeir.html");
+$( "#html-content" ).load("pages/current.html");
