@@ -4,19 +4,23 @@ var sections = [
     {
         name: "About",
         items: [
-            {name: "Hey", key: "hey", selected: true},
-            {name: "No", key: "no", selected: false},
-            {name: "Way", key: "way", selected: false}
+            {name: "About Ásgeir", key: "asgeir"},
+            {name: "Current projects", key: "current"}
         ]
     },{
         name: "People",
         items: [
-            {name: "Bragi", key: "bragi", selected: false}
+            {name: "Bragi", key: "bragi"},
+            {name: "Alumni", key: "alumni"}
         ]
     },{
-        name: "Projects",
+        name: "Research",
         items: [
-            {name: "Goose hunt", key: "goose-hunt", selected: false}
+            {name: "Cancer", key: "cancer"},
+            {name: "Tobacco", key: "tobacco"},
+            {name: "Prevention", key: "prevention"},
+            {name: "Other research", key: "other"}
+
         ]
     }
 ];
@@ -95,7 +99,7 @@ var Accordion = React.createClass({
 
     render: function() {
         return (
-            <div className="main">
+            <div className="menu">
                 {this.props.sections.map(function(section) {
                     return <Section key={section.name}
                                     section={section}
@@ -121,8 +125,7 @@ var MainContainer = React.createClass({
         this.setState({
             activeItem: itemName
         });
-        $( "#html-content" ).load(itemName + ".html");
-        console.log("Content: " + itemName + ".html");
+        $( "#html-content" ).load("pages/" + itemName + ".html");
     },
 
     render(){
@@ -130,13 +133,13 @@ var MainContainer = React.createClass({
             <div>
                 <div className="row main-container">
                     <div className="col-md-1 hidden-sm hidden-xs"></div>
-                    <div className="col-md-2 col-sm-3">
+                    <div className="col-md-2 col-sm-2">
                         <Accordion
                             onChildClick={this.onChildClick}
                             sections={sections}
                             activeItem={this.state.activeItem}/>
                     </div>
-                    <div className="col-md-6 col-sm-6" >
+                    <div className="col-md-6 col-sm-6 content" >
                         <div id="html-content"></div>
                     </div>
                     <div className="col-md-3 hidden-sm hidden-xs"></div>
@@ -162,4 +165,4 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
-$( "#html-content" ).load("hey.html");
+$( "#html-content" ).load("pages/asgeir.html");
