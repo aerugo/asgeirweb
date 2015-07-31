@@ -67,31 +67,6 @@ var new_sections = [
     }
 ];
 
-var sections = [
-        {
-            name: "About", key: "about-section",
-            items: [
-                {name: "Current projects", key: "current"},
-                {name: "About Ásgeir", key: "asgeir"}
-            ]
-        },{
-            name: "People", key: "people-section",
-            items: [
-                {name: "Bragi", key: "bragi"},
-                {name: "Alumni", key: "alumni"}
-            ]
-        },{
-            name: "Research", key: "research-section",
-            items: [
-                {name: "Cancer", key: "cancer"},
-                {name: "Tobacco", key: "tobacco"},
-                {name: "Prevention", key: "prevention"},
-                {name: "Other research", key: "other"}
-
-            ]
-        }
-];
-
 // Top panel
 
 var TopPanel = React.createClass({
@@ -99,9 +74,8 @@ var TopPanel = React.createClass({
         return (
             <div>
                 <div className="row top-banner">
-                    <div className="col-md-1 hidden-sm hidden-xs"></div>
-                    <div className="col-md-8 col-sm-8" id="title"><h1>Ásgeir R. Helgason Research</h1></div>
-                    <div className="col-md-2 col-sm-2 top-banner-languages">En Sv Ís</div>
+                    <div className="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
+                    <div className="col-lg-10 col-md-11 col-sm-12 col-xs-12" id="title"><h1>Ásgeir R. Helgason Research Network</h1></div>
                 </div>
                 <div className="row"></div>
             </div>
@@ -176,7 +150,7 @@ var Accordion = React.createClass({
         var these_sections = null;
         new_sections.map(function(section) {
             if(section.language == this.props.language) {
-                these_sections = section
+                these_sections = section.sections;
             }
         }.bind(this));
         console.log(these_sections);
@@ -259,20 +233,20 @@ var MainContainer = React.createClass({
         return (
             <div>
                 <div className="row main-container">
-                    <div className="col-md-1 hidden-sm hidden-xs"></div>
-                    <div className="col-md-2 col-sm-2">
+                    <div className="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
+                    <div className="col-md-1 col-sm-1 col-xs-1">
                         <Accordion
                             onChildClick={this.onChildClick}
-                            sections={sections}
                             activeItem={this.state.activeItem}
                             language={this.state.language}/>
                         <LanguageChooser
                             onChildClick={this.onChildClick}/>
                     </div>
-                    <div className="col-md-6 col-sm-6 content" >
+                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 vertical-divider"></div>
+                    <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 content" >
                         <div id="html-content"></div>
                     </div>
-                    <div className="col-md-3 hidden-sm hidden-xs"></div>
+                    <div className="col-md-1 hidden-sm hidden-xs"></div>
                 </div>
             </div>
         )
@@ -284,7 +258,7 @@ var MainContainer = React.createClass({
 var App = React.createClass({
     render(){
         return (
-            <div className="container-fluid">
+            <div className="container-fluid app-container">
                 <div><TopPanel /></div>
                 <div><MainContainer /></div>
             </div>
