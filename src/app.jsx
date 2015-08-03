@@ -172,10 +172,16 @@ var LanguageItem = React.createClass({
     handleClick: function(){
         this.props.onChildClick(this);
     },
+    getInitialState: function(){
+        return {
+            active: false
+        }
+    },
 
     render(){
+        var className = this.props.active ? "language-item active" : "language-item";
         return (
-            <div className="language-item" onClick={this.handleClick}>{this.props.name}</div>
+            <div className={className} onClick={this.handleClick}>{this.props.name}</div>
         );
     }
 });
@@ -234,7 +240,7 @@ var MainContainer = React.createClass({
             <div>
                 <div className="row main-container">
                     <div className="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
-                    <div className="col-md-1 col-sm-1 col-xs-1">
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 accordion">
                         <Accordion
                             onChildClick={this.onChildClick}
                             activeItem={this.state.activeItem}
@@ -242,11 +248,9 @@ var MainContainer = React.createClass({
                         <LanguageChooser
                             onChildClick={this.onChildClick}/>
                     </div>
-                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 vertical-divider"></div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 content" >
                         <div id="html-content"></div>
                     </div>
-                    <div className="col-md-1 hidden-sm hidden-xs"></div>
                 </div>
             </div>
         )

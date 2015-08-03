@@ -19,14 +19,16 @@
   padding-top: 50px;
 }
 
+
+.accordion {
+  width: 170px;
+}
+
 .content {
   padding-left: 3em;
   max-width: 600px;
 }
 
-.vertical-divider {
-  max-width: 80px;
-}
 
 @lightblue: #5698FC;
 @headerfont: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
@@ -88,13 +90,24 @@ body {
 }
 
 .language-box {
+  font-family: @headerfont;
+  font-weight: 700;
   position: relative;
   width: 10em;
   overflow: hidden;
-  padding-bottom: 2em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .language-item {
+  color: black;
   cursor: pointer;
   padding: 0.2em 1em 0.4em;
+  font-family: @headerfont;
+  font-weight: 500;
+}
+
+.language-item.active {
+  color: #5698FC;
 }
