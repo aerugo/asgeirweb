@@ -1,5 +1,5 @@
 {
-  "name": "react_playground",
+  "name": "asgeirweb",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
@@ -21,11 +21,11 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aerugo/react_playground.git"
+    "url": "git+https://github.com/aerugo/asgeirweb.git"
   },
   "bugs": {
-    "url": "https://github.com/aerugo/react_playground/issues"
+    "url": "https://github.com/aerugo/asgeirweb/issues"
   },
-  "homepage": "https://github.com/aerugo/react_playground#readme",
+  "homepage": "https://github.com/aerugo/asgeirweb#readme",
   "description": ""
 }
