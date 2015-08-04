@@ -76,17 +76,26 @@ body {
   padding: 0.5em 2em 0.5em 0.5em;
 }
 
-.section-item {
+.section-item, {
   font-family: @headerfont;
+  color: black;
   cursor: pointer;
   background: white;
   padding: 0.2em 1em 0.4em;
   line-height: 100%;
 }
 
-.section-item.active {
+.section-item.active, {
   background: @lightblue;
   color: white;
+}
+
+.menu-link,
+.menu-link:hover,
+.menu-link:active,
+.menu-link:link,
+.menu-link:visited {
+  text-decoration: none;
 }
 
 .language-box {
@@ -110,4 +119,5 @@ body {
 
 .language-item.active {
   color: #5698FC;
+  font-weight: 600;
 }

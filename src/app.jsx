@@ -1,4 +1,8 @@
-var React = require("react");
+var React = require("react"),
+    RouterMixin = require("react-mini-router").RouterMixin;
+
+var currentPath = "current";
+var currentLanguage = "en";
 
 var new_sections = [
     {
@@ -139,21 +143,24 @@ var SectionItem = React.createClass({
     render: function() {
         var className = this.props.active ? "section-item active" : "section-item";
         return (
-            <div className={className} onClick={this.handleClick}>{this.props.item.name}</div>
+            <a className="menu-link"
+               href={"#!/page/" + currentLanguage + "/" + this.props.item.key}>
+                <div className={className} onClick={this.handleClick}>
+                    {this.props.item.name}
+                </div>
+            </a>
         );
     }
 });
 
 var Accordion = React.createClass({
     render: function() {
-
         var these_sections = null;
         new_sections.map(function(section) {
             if(section.language == this.props.language) {
                 these_sections = section.sections;
             }
         }.bind(this));
-        console.log(these_sections);
 
         return (
             <div className="menu">
@@ -171,6 +178,7 @@ var Accordion = React.createClass({
 var LanguageItem = React.createClass({
     handleClick: function(){
         this.props.onChildClick(this);
+        currentLanguage = this.props.code;
     },
     getInitialState: function(){
         return {
@@ -179,9 +187,12 @@ var LanguageItem = React.createClass({
     },
 
     render(){
-        var className = this.props.active ? "language-item active" : "language-item";
+        var className = this.props.code == currentLanguage ? "language-item active" : "language-item";
         return (
-            <div className={className} onClick={this.handleClick}>{this.props.name}</div>
+            <a className="menu-link"
+               href={"#!/page/" + this.props.code + "/" + currentPath}>
+                <div className={className} onClick={this.handleClick}>{this.props.name}</div>
+            </a>
         );
     }
 });
@@ -215,8 +226,8 @@ var MainContainer = React.createClass({
 
     getInitialState: function() {
         return {
-            activeItem: "current",
-            language: "en"
+            activeItem: this.props.activeItem,
+            language: this.props.language
         };
     },
 
@@ -260,17 +271,47 @@ var MainContainer = React.createClass({
 // App
 
 var App = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        "/": "home",
+        "/page/:language/:id": "page"
+    },
+
+    componentDidMount() {
+        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
+    },
+
     render(){
         return (
+            this.renderCurrentRoute()
+        )
+    },
+
+    home: function() {
+        currentPath = "current";
+        return(
+        <div className="container-fluid app-container">
+            <div><TopPanel /></div>
+            <div><MainContainer language="en" activeItem="current"/></div>
+        </div>
+        )
+    },
+
+    page: function(language, id) {
+        currentPath = id;
+        currentLanguage = language;
+        return(
             <div className="container-fluid app-container">
                 <div><TopPanel /></div>
-                <div><MainContainer /></div>
+                <div><MainContainer language={language} activeItem={id}/></div>
             </div>
         )
     }
+
 });
 
 
 
 React.render(<App/>, document.getElementById('app-container'));
-$( "#html-content" ).load("content/pages/en/current.html");
