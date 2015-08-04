@@ -1,6 +1,7 @@
 var React = require("react"),
     RouterMixin = require("react-mini-router").RouterMixin;
 
+
 var currentPath = "current";
 var currentLanguage = "en";
 
