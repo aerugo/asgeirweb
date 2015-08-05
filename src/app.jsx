@@ -72,17 +72,26 @@ var sections = [
     }
 ];
 
-// Top panel
-
-var TopPanel = React.createClass({
+var Header = React.createClass({
     render(){
         return (
             <div>
-                <div className="row top-banner">
+                <div className="row header">
                     <div className="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
                     <div className="col-lg-10 col-md-11 col-sm-12 col-xs-12" id="title"><h1>Ásgeir R. Helgason Research Network</h1></div>
                 </div>
                 <div className="row"></div>
+            </div>
+        );
+    }
+});
+
+var Footer = React.createClass({
+    render(){
+        return (
+            <div>
+                <div className="row"></div>
+                <div className="row footer"></div>
             </div>
         );
     }
@@ -220,20 +229,20 @@ var ContactChooser = React.createClass({
     render(){
         var title = "Contact";
         var languages = [
-            {name: "English", key: "en", title: "Contact"},
-            {name: "Svenska", key: "sv", title: "Kontakt"},
-            {name: "Íslenska", key: "is", title: "Hafðu samband"}
+            {name: "English", code: "en", title: "Contact", key: "contact-en"},
+            {name: "Svenska", code: "sv", title: "Kontakt", key: "contact-sv"},
+            {name: "Íslenska", code: "is", title: "Hafðu samband", key: "contact-is"}
         ];
         languages.map(function(language) {
-            if (language.key == currentLanguage) {
+            if (language.code == currentLanguage) {
                 title = language.title;
             }
         });
         var sites = [
-            {name: "Karolinska Institutet", url: "http://ki.se/en/people/asghel"},
-            {name: "Reykjavik University", url: "http://en.ru.is/the-university/faculty-and-staff/asgeirr"},
-            {name: "ResearchGate", url: "https://www.researchgate.net/profile/Asgeir_Helgason2"},
-            {name: "LinkedIn", url: "https://se.linkedin.com/pub/asgeir-r-helgason/56/644/2a2"}
+            {name: "Karolinska Institutet", url: "http://ki.se/en/people/asghel", key: "site-ki"},
+            {name: "Reykjavik University", url: "http://en.ru.is/the-university/faculty-and-staff/asgeirr", key: "site-ru"},
+            {name: "ResearchGate", url: "https://www.researchgate.net/profile/Asgeir_Helgason2", key: "site-rg"},
+            {name: "LinkedIn", url: "https://se.linkedin.com/pub/asgeir-r-helgason/56/644/2a2", key: "site-li"}
         ];
         return(
             <div className="sidebar-box">
@@ -241,6 +250,7 @@ var ContactChooser = React.createClass({
                 {sites.map(function(item) {
                     return (<a className="menu-link"
                                target="_blank"
+                               key={item.key}
                                href={item.url}>
                             <div className="sidebar-link-item sidebar-link-site">{item.name}</div>
                             </a>)
@@ -280,6 +290,7 @@ var MainContainer = React.createClass({
     render(){
         return (
             <div>
+                <Header />
                 <div className="row main-container">
                     <div className="col-lg-2 col-md-1 hidden-sm hidden-xs"></div>
                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 accordion">
@@ -293,8 +304,10 @@ var MainContainer = React.createClass({
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 content" >
                         <div id="html-content"></div>
+
                     </div>
                 </div>
+                <Footer />
             </div>
         )
     }
@@ -326,19 +339,8 @@ var App = React.createClass({
         currentPath = "current";
         return(
         <div className="container-fluid app-container">
-            <div><TopPanel /></div>
             <div><MainContainer language="en" activeItem="current"/></div>
         </div>
-        )
-    },
-
-    asgeir: function() {
-        currentPath = "asgeir";
-        return(
-            <div className="container-fluid app-container">
-                <div><TopPanel /></div>
-                <div><MainContainer language="en" activeItem="asgeir"/></div>
-            </div>
         )
     },
 
@@ -347,7 +349,6 @@ var App = React.createClass({
         currentLanguage = language;
         return(
             <div className="container-fluid app-container">
-                <div><TopPanel /></div>
                 <div><MainContainer language={language} activeItem={id}/></div>
             </div>
         )
