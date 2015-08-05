@@ -5,7 +5,7 @@ var React = require("react"),
 var currentPath = "current";
 var currentLanguage = "en";
 
-var new_sections = [
+var sections = [
     {
         language: "en", key: "en",
         sections: [
@@ -134,15 +134,10 @@ var Section = React.createClass({
 var SectionItem = React.createClass({
     handleClick: function(){
         this.props.onChildClick(this);
-    },
-    getInitialState: function(){
-        return {
-            active: false,
-            class: "section-item"
-        }
+        currentPath = this.props.item.key;
     },
     render: function() {
-        var className = this.props.active ? "section-item active" : "section-item";
+        var className = this.props.item.key == currentPath ? "section-item active" : "section-item";
         return (
             <a className="menu-link"
                href={"#!/page/" + currentLanguage + "/" + this.props.item.key}>
@@ -157,7 +152,7 @@ var SectionItem = React.createClass({
 var Accordion = React.createClass({
     render: function() {
         var these_sections = null;
-        new_sections.map(function(section) {
+        sections.map(function(section) {
             if(section.language == this.props.language) {
                 these_sections = section.sections;
             }
@@ -181,14 +176,8 @@ var LanguageItem = React.createClass({
         this.props.onChildClick(this);
         currentLanguage = this.props.code;
     },
-    getInitialState: function(){
-        return {
-            active: false
-        }
-    },
-
     render(){
-        var className = this.props.code == currentLanguage ? "language-item active" : "language-item";
+        var className = this.props.code == currentLanguage ? "sidebar-link-item active" : "sidebar-link-item";
         return (
             <a className="menu-link"
                href={"#!/page/" + this.props.code + "/" + currentPath}>
@@ -200,14 +189,20 @@ var LanguageItem = React.createClass({
 
 var LanguageChooser = React.createClass({
     render(){
+        var title = "Language";
         var languages = [
-            {name: "English", key: "en"},
-            {name: "Svenska", key: "sv"},
-            {name: "Íslenska", key: "is"}
+            {name: "English", key: "en", title: "Language"},
+            {name: "Svenska", key: "sv", title: "Språk"},
+            {name: "Íslenska", key: "is", title: "Tungumál"}
         ];
+        languages.map(function(language) {
+            if(language.key == currentLanguage) {
+                title = language.title;
+            }
+        }.bind(this));
         return (
-            <div className="language-box">
-                <div>Language</div>
+            <div className="sidebar-box">
+                <div className="sidebar-header">{title}</div>
                 {languages.map(function(item) {
                     return <LanguageItem
                         key={item.key}
@@ -216,6 +211,41 @@ var LanguageChooser = React.createClass({
                         onChildClick={this.props.onChildClick}
                         type="language" />
                 }.bind(this))}
+            </div>
+        );
+    }
+});
+
+var ContactChooser = React.createClass({
+    render(){
+        var title = "Contact";
+        var languages = [
+            {name: "English", key: "en", title: "Contact"},
+            {name: "Svenska", key: "sv", title: "Kontakt"},
+            {name: "Íslenska", key: "is", title: "Hafðu samband"}
+        ];
+        languages.map(function(language) {
+            if (language.key == currentLanguage) {
+                title = language.title;
+            }
+        });
+        var sites = [
+            {name: "Karolinska Institutet", url: "http://ki.se/en/people/asghel"},
+            {name: "Reykjavik University", url: "http://en.ru.is/the-university/faculty-and-staff/asgeirr"},
+            {name: "ResearchGate", url: "https://www.researchgate.net/profile/Asgeir_Helgason2"},
+            {name: "LinkedIn", url: "https://se.linkedin.com/pub/asgeir-r-helgason/56/644/2a2"}
+        ];
+        return(
+            <div className="sidebar-box">
+                <div className="sidebar-header">{title}</div>
+                {sites.map(function(item) {
+                    return (<a className="menu-link"
+                               target="_blank"
+                               href={item.url}>
+                            <div className="sidebar-link-item sidebar-link-site">{item.name}</div>
+                            </a>)
+                }.bind(this))}
+
             </div>
         );
     }
@@ -259,6 +289,7 @@ var MainContainer = React.createClass({
                             language={this.state.language}/>
                         <LanguageChooser
                             onChildClick={this.onChildClick}/>
+                        <ContactChooser/>
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 content" >
                         <div id="html-content"></div>
@@ -277,6 +308,7 @@ var App = React.createClass({
 
     routes: {
         "/": "home",
+        "/about": "asgeir",
         "/page/:language/:id": "page"
     },
 
@@ -300,6 +332,16 @@ var App = React.createClass({
         )
     },
 
+    asgeir: function() {
+        currentPath = "asgeir";
+        return(
+            <div className="container-fluid app-container">
+                <div><TopPanel /></div>
+                <div><MainContainer language="en" activeItem="asgeir"/></div>
+            </div>
+        )
+    },
+
     page: function(language, id) {
         currentPath = id;
         currentLanguage = language;
@@ -316,3 +358,6 @@ var App = React.createClass({
 
 
 React.render(<App/>, document.getElementById('app-container'));
+$(window).on('hashchange', function() {
+    $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
+});
