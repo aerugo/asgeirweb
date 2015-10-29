@@ -13,14 +13,9 @@ var sections = [
             name: "About", key: "about-section",
             items: [
                 {name: "Current projects", key: "current"},
-                {name: "About Ásgeir", key: "asgeir"}
+                {name: "About Ásgeir", key: "asgeir"},
+                {name: "Collaborators", key: "collaborators"}
                     ]
-            }, {
-            name: "People", key: "people-section",
-            items: [
-                {name: "Bragi", key: "bragi"},
-                {name: "Alumni", key: "alumni"}
-                ]
             }, {
                 name: "Research", key: "research-section",
                 items: [
