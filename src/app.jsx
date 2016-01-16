@@ -14,15 +14,13 @@ var sections = [
             items: [
                 {name: "Current projects", key: "current"},
                 {name: "About Ásgeir", key: "asgeir"},
-                {name: "Collaborators", key: "collaborators"}
                     ]
             }, {
                 name: "Research", key: "research-section",
                 items: [
-                    {name: "Cancer", key: "cancer"},
-                    {name: "Tobacco", key: "tobacco"},
+                    {name: "Cancer and palliative care", key: "cancer"},
                     {name: "Prevention", key: "prevention"},
-                    {name: "Other research", key: "other"}
+                    {name: "Collaborators", key: "collaborators"}
                 ]
             }
         ]
@@ -34,21 +32,14 @@ var sections = [
                 name: "Om oss", key: "about-section",
                 items: [
                     {name: "Pågående projekt", key: "current"},
-                    {name: "Om Ásgeir", key: "asgeir"}
-                ]
-            }, {
-                name: "Medarbetare", key: "people-section",
-                items: [
-                    {name: "Bragi", key: "bragi"},
-                    {name: "Alumner", key: "alumni"}
+                    {name: "Om Ásgeir", key: "asgeir"},
                 ]
             }, {
                 name: "Forskning", key: "research-section",
                 items: [
-                    {name: "Cancer", key: "cancer"},
-                    {name: "Tobak", key: "tobacco"},
+                    {name: "Cancer och vård i livets slutskede", key: "cancer"},
                     {name: "Prevention", key: "prevention"},
-                    {name: "Övrig forskning", key: "other"}
+                    {name: "Samarbetspartners", key: "collaborators"}
                 ]
             }
         ]
@@ -95,14 +86,16 @@ var Footer = React.createClass({
 // Sidebar menu
 
 var Section = React.createClass({
+    /*
     handleClick: function(){
         this.setState({
             open: !this.state.open,
             class: this.state.open ? "section" : "section open"
         });
     },
+     */
     getInitialState: function(){
-        if(this.props.section.key == "about-section"){
+        if(this.props.section.key != ""){
             return {
                 open: true,
                 class: "section open"
