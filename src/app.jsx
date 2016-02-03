@@ -307,12 +307,6 @@ var MainContainer = React.createClass({
 
 var App = React.createClass({
 
-    routes: {
-        "/": "home",
-        "/page/:language/:id": "page"
-    },
-
-    mixins: [RouterMixin],
 
     render(){
         return (
