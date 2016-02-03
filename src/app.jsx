@@ -316,9 +316,7 @@ var App = React.createClass({
 
     render(){
         return (
-            <div className="container-fluid app-container">
-                {this.renderCurrentRoute()}
-            </div>
+            this.renderCurrentRoute()
         )
     },
 
