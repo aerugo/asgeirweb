@@ -96,7 +96,7 @@ var Section = React.createClass({
     },
      */
     getInitialState: function(){
-        if(this.props.section.key != ""){
+        if(this.props.section.key != null){
             return {
                 open: true,
                 class: "section open"
