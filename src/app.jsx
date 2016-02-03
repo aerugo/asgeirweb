@@ -1,4 +1,5 @@
 var React = require("react"),
+    ReactDOM = require("react-dom")
     RouterMixin = require("react-mini-router").RouterMixin;
 
 
@@ -346,7 +347,7 @@ var App = React.createClass({
 
 
 
-React.render(<App/>, document.getElementById('app-container'));
+ReactDOM.render(<App/>, document.getElementById('app-container'));
 $(window).on('hashchange', function() {
     $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
 });
