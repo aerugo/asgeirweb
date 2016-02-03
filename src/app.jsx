@@ -1,5 +1,4 @@
 var React = require("react"),
-    ReactDOM = require("react-dom"),
     RouterMixin = require("react-mini-router").RouterMixin;
 
 
@@ -14,14 +13,21 @@ var sections = [
             name: "About", key: "about-section",
             items: [
                 {name: "Current projects", key: "current"},
-                {name: "About Ásgeir", key: "asgeir"},
+                {name: "About Ásgeir", key: "asgeir"}
                     ]
+            }, {
+            name: "People", key: "people-section",
+            items: [
+                {name: "Bragi", key: "bragi"},
+                {name: "Alumni", key: "alumni"}
+                ]
             }, {
                 name: "Research", key: "research-section",
                 items: [
-                    {name: "Cancer and palliative care", key: "cancer"},
+                    {name: "Cancer", key: "cancer"},
+                    {name: "Tobacco", key: "tobacco"},
                     {name: "Prevention", key: "prevention"},
-                    {name: "Collaborators", key: "collaborators"}
+                    {name: "Other research", key: "other"}
                 ]
             }
         ]
@@ -33,14 +39,21 @@ var sections = [
                 name: "Om oss", key: "about-section",
                 items: [
                     {name: "Pågående projekt", key: "current"},
-                    {name: "Om Ásgeir", key: "asgeir"},
+                    {name: "Om Ásgeir", key: "asgeir"}
+                ]
+            }, {
+                name: "Medarbetare", key: "people-section",
+                items: [
+                    {name: "Bragi", key: "bragi"},
+                    {name: "Alumner", key: "alumni"}
                 ]
             }, {
                 name: "Forskning", key: "research-section",
                 items: [
-                    {name: "Cancer och vård i livets slutskede", key: "cancer"},
+                    {name: "Cancer", key: "cancer"},
+                    {name: "Tobak", key: "tobacco"},
                     {name: "Prevention", key: "prevention"},
-                    {name: "Samarbetspartners", key: "collaborators"}
+                    {name: "Övrig forskning", key: "other"}
                 ]
             }
         ]
@@ -87,16 +100,14 @@ var Footer = React.createClass({
 // Sidebar menu
 
 var Section = React.createClass({
-    /*
     handleClick: function(){
         this.setState({
             open: !this.state.open,
             class: this.state.open ? "section" : "section open"
         });
     },
-     */
     getInitialState: function(){
-        if(this.props.section.key != null){
+        if(this.props.section.key == "about-section"){
             return {
                 open: true,
                 class: "section open"
@@ -133,7 +144,6 @@ var SectionItem = React.createClass({
     handleClick: function(){
         this.props.onChildClick(this);
         currentPath = this.props.item.key;
-        console.log(currentPath);
     },
     render: function() {
         var className = this.props.item.key == currentPath ? "section-item active" : "section-item";
@@ -311,17 +321,18 @@ var App = React.createClass({
 
     routes: {
         "/": "home",
+        "/about": "asgeir",
         "/page/:language/:id": "page"
+    },
+
+    componentDidMount() {
+        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
     },
 
     render(){
         return (
             this.renderCurrentRoute()
         )
-    },
-
-    componentDidMount() {
-        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
     },
 
     home: function() {
@@ -345,9 +356,9 @@ var App = React.createClass({
 
 });
 
-module.exports = App;
 
-ReactDOM.render(<App/>, document.getElementById('app-container'));
+
+React.render(<App/>, document.getElementById('app-container'));
 $(window).on('hashchange', function() {
     $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
 });
