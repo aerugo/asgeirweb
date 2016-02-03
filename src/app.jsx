@@ -319,6 +319,10 @@ var App = React.createClass({
         )
     },
 
+    componentDidMount() {
+        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
+    },
+
     home: function() {
         currentPath = "current";
         return(
