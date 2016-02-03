@@ -1,5 +1,5 @@
 var React = require("react"),
-    ReactDOM = require("react-dom")
+    ReactDOM = require("react-dom"),
     RouterMixin = require("react-mini-router").RouterMixin;
 
 
