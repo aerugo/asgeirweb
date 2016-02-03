@@ -310,7 +310,6 @@ var App = React.createClass({
 
     routes: {
         "/": "home",
-        "/about": "asgeir",
         "/page/:language/:id": "page"
     },
 
@@ -318,10 +317,6 @@ var App = React.createClass({
         return (
             this.renderCurrentRoute()
         )
-    },
-
-    componentDidMount() {
-        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
     },
 
     home: function() {
@@ -344,8 +339,6 @@ var App = React.createClass({
     }
 
 });
-
-
 
 React.render(<App/>, document.getElementById('app-container'));
 $(window).on('hashchange', function() {
