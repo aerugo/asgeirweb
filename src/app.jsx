@@ -132,6 +132,7 @@ var SectionItem = React.createClass({
     handleClick: function(){
         this.props.onChildClick(this);
         currentPath = this.props.item.key;
+        console.log(currentPath);
     },
     render: function() {
         var className = this.props.item.key == currentPath ? "section-item active" : "section-item";
