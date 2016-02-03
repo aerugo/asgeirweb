@@ -314,14 +314,14 @@ var App = React.createClass({
         "/page/:language/:id": "page"
     },
 
-    componentDidMount() {
-        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
-    },
-
     render(){
         return (
             this.renderCurrentRoute()
         )
+    },
+
+    componentDidMount() {
+        $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
     },
 
     home: function() {
