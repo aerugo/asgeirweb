@@ -306,7 +306,8 @@ var MainContainer = React.createClass({
 
 var App = React.createClass({
 
-
+    render(){
+    },
 
     componentDidMount() {
         $( "#html-content" ).load("content/pages/" + currentLanguage + "/" + currentPath + ".html")
